@@ -36,12 +36,6 @@ function fetchText(url) {
   });
 }
 
-function extractImage(description) {
-  if (!description) return "";
-  const match = description.match(/<img[^>]+src="([^"]+)"/i);
-  return match ? match[1] : "";
-}
-
 (async () => {
   try {
     const xml = await fetchText(RSS_URL);
@@ -50,16 +44,14 @@ function extractImage(description) {
     const items = parsed?.rss?.channel?.item || [];
     const normalized = Array.isArray(items) ? items : [items];
 
-    const news = normalized.slice(0, 3).map((item) => ({
-      title: item.title,
-      link: item.link,
-      date: new Date(item.pubDate).toISOString().slice(0, 10),
-      image: extractImage(item.description || "")
+    const feed = normalized.map((item) => ({
+      title: item.title || "タイトル未設定",
+      url: item.link || "https://note.com/saitolabo"
     }));
 
-    fs.writeFileSync("news.json", JSON.stringify(news, null, 2), "utf-8");
-    console.log("news.json updated");
-    console.log(news);
+    fs.writeFileSync("data/note-feed.json", JSON.stringify(feed, null, 2), "utf-8");
+    console.log("data/note-feed.json updated");
+    console.log(feed);
   } catch (error) {
     console.error(error);
     process.exit(1);
