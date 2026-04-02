@@ -45,7 +45,7 @@ async function loadNoteTitles(limit, targetSelector, showAllLink = false) {
     });
     if (showAllLink) {
       const li = document.createElement('li');
-      li.innerHTML = '<a href="https://note.com/manabedesign2026" target="_blank" rel="noopener noreferrer">note一覧を見る</a>';
+      li.innerHTML = '<a href="https://note.com/saitolabo" target="_blank" rel="noopener noreferrer">note一覧を見る</a>';
       target.appendChild(li);
     }
   } catch (error) {
