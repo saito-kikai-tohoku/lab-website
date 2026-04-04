@@ -36,6 +36,20 @@ function fetchText(url) {
   });
 }
 
+// ★ タイトルから日付抽出
+function extractDateFromTitle(title) {
+  const match = title.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+  if (!match) return null;
+
+  const [_, y, m, d] = match;
+  const date = new Date(Number(y), Number(m) - 1, Number(d));
+
+  return {
+    timestamp: date.getTime(),
+    label: `${y}年${Number(m)}月${Number(d)}日`
+  };
+}
+
 (async () => {
   try {
     const xml = await fetchText(RSS_URL);
@@ -44,10 +58,21 @@ function fetchText(url) {
     const items = parsed?.rss?.channel?.item || [];
     const normalized = Array.isArray(items) ? items : [items];
 
-    const feed = normalized.map((item) => ({
-      title: item.title || "タイトル未設定",
-      url: item.link || "https://note.com/saitolabo"
-    }));
+    const feed = normalized
+      .map((item) => {
+        const title = item.title || "タイトル未設定";
+        const url = item.link || "https://note.com/saitolabo";
+
+        const extracted = extractDateFromTitle(title);
+
+        return {
+          title: title,
+          url: url,
+          timestamp: extracted ? extracted.timestamp : 0,
+          dateLabel: extracted ? extracted.label : ""
+        };
+      })
+      .sort((a, b) => b.timestamp - a.timestamp);
 
     fs.writeFileSync("data/note-feed.json", JSON.stringify(feed, null, 2), "utf-8");
     console.log("data/note-feed.json updated");
