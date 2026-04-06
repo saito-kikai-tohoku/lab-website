@@ -59,6 +59,7 @@ function extractDateFromTitle(title) {
     const normalized = Array.isArray(items) ? items : [items];
 
     console.log("RSS item count:", normalized.length);
+　　console.log("RSS titles:", normalized.map(item => item.title));
     
     const feed = normalized
       .map((item) => {
