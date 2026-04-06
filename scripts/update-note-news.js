@@ -58,6 +58,8 @@ function extractDateFromTitle(title) {
     const items = parsed?.rss?.channel?.item || [];
     const normalized = Array.isArray(items) ? items : [items];
 
+    console.log("RSS item count:", normalized.length);
+    
     const feed = normalized
       .map((item) => {
         const title = item.title || "タイトル未設定";
