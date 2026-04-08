@@ -146,3 +146,9 @@ img,video{max-width:100%;display:block}
 .paper-list a:hover {
   text-decoration: underline;
 }
+.paper-list li {
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 2px 0;
+}
