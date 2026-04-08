@@ -124,3 +124,25 @@ img,video{max-width:100%;display:block}
   font-weight: 700;
   color: inherit;
 }
+
+.research-title {
+  font-weight: 700;
+  color: inherit;
+}
+
+.paper-list {
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.paper-list ul {
+  margin: 4px 0 0 16px;
+}
+
+.paper-list a {
+  text-decoration: none;
+}
+
+.paper-list a:hover {
+  text-decoration: underline;
+}
